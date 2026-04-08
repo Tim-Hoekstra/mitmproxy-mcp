@@ -793,7 +793,6 @@ async def _drop_request(state: AppState, args: dict) -> list[TextContent]:
     if not intercepted:
         return _error(f"No intercepted request with flow_id: {flow_id}")
 
-    reason = args.get("reason", "dropped by agent")
     intercepted.flow.kill()
 
     if state.mitmproxy_loop:

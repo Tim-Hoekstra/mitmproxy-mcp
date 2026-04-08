@@ -105,7 +105,6 @@ class LoggingAddon:
 
     def _build_http_entry(self, flow: http.HTTPFlow, error: bool = False) -> HttpLogEntry:
         req = flow.request
-        headers_dict = dict(req.headers.items(multi=True))
         # Group duplicate headers into lists
         req_headers: dict[str, list[str]] = {}
         for k, v in req.headers.items(multi=True):

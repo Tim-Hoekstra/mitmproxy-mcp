@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import logging
 
-import psycopg
 from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
 
