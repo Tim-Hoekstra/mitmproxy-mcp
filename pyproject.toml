@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mitmproxy-mcp"
+version = "0.1.0"
+description = "MCP-controlled mitmproxy interception and logging tool"
+requires-python = ">=3.12"
+dependencies = [
+    "mitmproxy>=10.3",
+    "mcp[cli]>=1.0",
+    "psycopg[binary]>=3.1",
+    "psycopg-pool>=3.2",
+    "httpx[http2]>=0.27",
+    "pydantic>=2.0",
+]
+
+[project.scripts]
+mitmproxy-mcp = "mitmproxy_mcp:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mitmproxy_mcp"]

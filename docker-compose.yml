@@ -1,0 +1,48 @@
+services:
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PROXY_PORT: "8080"
+      DB_DSN: "postgresql://mitmuser:mitmpass@postgres:5432/mitmdb"
+      QUEUE_MAXSIZE: "50000"
+      DB_BATCH_SIZE: "100"
+      DB_FLUSH_MS: "500"
+      INTERCEPT_TIMEOUT_S: "60"
+      LOG_LEVEL: "INFO"
+    volumes:
+      - mitmproxy_certs:/root/.mitmproxy
+    stdin_open: true
+    tty: true
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mitmuser
+      POSTGRES_PASSWORD: mitmpass
+      POSTGRES_DB: mitmdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mitmuser -d mitmdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  adminer:
+    image: adminer:latest
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:
+  mitmproxy_certs:

@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "mitmproxy-mcp": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "mitmproxy-mcp-app-1",
+        "python",
+        "-m",
+        "mitmproxy_mcp"
+      ],
+      "env": {}
+    }
+  }
+}
